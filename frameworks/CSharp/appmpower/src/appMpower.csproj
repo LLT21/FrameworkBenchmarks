@@ -5,7 +5,7 @@
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <TieredPGO>true</TieredPGO>
 
     <!-- Normal .NET 7 -->
     <PublishAot>true</PublishAot>
@@ -23,7 +23,7 @@
     <IlcGenerateCompleteTypeMetadata>false</IlcGenerateCompleteTypeMetadata>
 
     <!-- Still works from the experimental AOT version, but high risk -->
-    <IlcDisableReflection>true</IlcDisableReflection>
+    <!--<IlcDisableReflection>true</IlcDisableReflection>-->
 
     <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
 
