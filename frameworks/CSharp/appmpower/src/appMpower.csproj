@@ -47,6 +47,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+      <DefineConstants>$(DefineConstants);ADO</DefineConstants>
       <DefineConstants>$(DefineConstants);POSTGRESQL</DefineConstants>
       <DefineConstants Condition=" '$(Driver)' == 'odbc' ">$(DefineConstants);ODBC</DefineConstants>
       <DefineConstants Condition=" '$(Driver)' == 'ado' ">$(DefineConstants);ADO</DefineConstants>

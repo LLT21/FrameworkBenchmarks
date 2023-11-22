@@ -1,3 +1,4 @@
+#if ODBC
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,7 +14,7 @@ namespace appMpower
    {
       private const int MaxBatch = 500;
 
-#if ADO      
+#if ADO
       private static ConcurrentRandom _random = new ConcurrentRandom();
 #else
       private static Random _random = new Random();
@@ -127,7 +128,7 @@ namespace appMpower
 
 #if !MYSQL
          var jds = PlatformBenchmarks.BatchUpdateString.Jds;
-#endif      
+#endif
 
          for (int i = 0; i < count; i++)
          {
@@ -153,11 +154,11 @@ namespace appMpower
 
       private static (DbCommand dbCommand, IDbDataParameter dbDataParameter) CreateReadCommand(DbConnection pooledConnection)
       {
-#if ADO         
+#if ADO
          var dbCommand = new DbCommand("SELECT * FROM world WHERE id=@Id", pooledConnection);
-#else         
+#else
          var dbCommand = new DbCommand("SELECT * FROM world WHERE id=?", pooledConnection);
-#endif         
+#endif
 
          return (dbCommand, dbCommand.CreateParameter("Id", DbType.Int32, _random.Next(1, 10001)));
       }
@@ -329,3 +330,4 @@ namespace appMpower
       }
    }
 }
+#endif

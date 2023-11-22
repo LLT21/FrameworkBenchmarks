@@ -1,3 +1,4 @@
+#if ODBC
 using System.Data;
 using System.Threading.Tasks;
 
@@ -223,3 +224,4 @@ namespace appMpower.Data
       }
    }
 }
+#endif
