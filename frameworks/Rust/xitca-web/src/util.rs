@@ -49,7 +49,7 @@ mod non_wasm {
         }
     }
 
-    #[cfg(any(feature = "pg", feature = "pg-iou"))]
+    #[cfg(feature = "pg")]
     mod pg_state {
         use core::{cell::RefCell, future::Future, pin::Pin};
 
@@ -65,9 +65,7 @@ mod non_wasm {
 
         pub type Ctx<'a, Req> = Context<'a, Req, State<Client>>;
 
-        pub fn context_mw(
-        ) -> ContextBuilder<impl Fn() -> Pin<Box<dyn Future<Output = HandleResult<State<Client>>>>>>
-        {
+        pub fn context_mw() -> ContextBuilder<impl Fn() -> Pin<Box<dyn Future<Output = HandleResult<State<Client>>>>>> {
             ContextBuilder::new(|| {
                 Box::pin(async {
                     db::create().await.map(|client| State {
@@ -79,7 +77,7 @@ mod non_wasm {
         }
     }
 
-    #[cfg(any(feature = "pg", feature = "pg-iou"))]
+    #[cfg(feature = "pg")]
     pub use pg_state::*;
 }
 

@@ -1,10 +1,13 @@
 ---
 spring:
-  threads:
-    virtual:
-      enabled: true
-  jpa:
-    open-in-view: false
+  config:
+    activate:
+      on-profile: jdbc
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration
+
+---
+spring:
   config:
     activate:
       on-profile: jdbc,jpa
@@ -25,6 +28,8 @@ spring:
   config:
     activate:
       on-profile: jpa
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
@@ -33,6 +38,8 @@ spring:
   config:
     activate:
       on-profile: mongo
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration
 
 spring.data.mongodb:
   host: tfb-database
@@ -46,3 +53,4 @@ spring:
 
 server.server-header: Spring
 server.servlet.encoding.force: true
+spring.jpa.open-in-view: false

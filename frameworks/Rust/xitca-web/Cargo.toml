@@ -11,7 +11,7 @@ required-features = ["io-uring", "pg", "router", "template"]
 [[bin]]
 name = "xitca-web-iou"
 path = "./src/main_iou.rs"
-required-features = ["io-uring", "perf", "pg-iou", "template"]
+required-features = ["io-uring", "perf", "pg", "template"]
 
 [[bin]]
 name = "xitca-web-wasm"
@@ -30,41 +30,39 @@ required-features = ["pg-orm", "template", "web-codegen"]
 
 [features]
 # pg optional
-pg = ["xitca-postgres/single-thread"]
+pg = ["dep:xitca-postgres"]
 # pg send/sync optional
-pg-sync = ["xitca-postgres"]
-# pg io_uring optional
-pg-iou = ["pg", "xitca-postgres/io-uring"]
+pg-sync = ["dep:xitca-postgres"]
 # pg orm optional
-pg-orm = ["diesel"]
+pg-orm = ["dep:diesel"]
 # http router optional
 router = ["xitca-http/router"]
 # web optional
-web = ["xitca-web"]
+web = ["dep:xitca-web"]
 # web codegen optional
 web-codegen = ["xitca-web/codegen", "xitca-web/urlencoded"]
 # template optional
-template = ["sailfish"]
+template = ["dep:sailfish"]
 # io-uring optional
 io-uring = ["xitca-http/io-uring", "xitca-server/io-uring"]
 # axum optional
-axum = ["dep:axum", "http-body", "tower", "tower-http", "xitca-web/tower-http-compat" ]
+axum = ["dep:axum", "dep:http-body", "dep:tower", "dep:tower-http", "xitca-web/tower-http-compat" ]
 # unrealistic performance optimization
-perf = ["mimalloc", "tokio/parking_lot"]
+perf = ["dep:mimalloc", "tokio/parking_lot"]
 
 [dependencies]
-xitca-http = "0.5"
-xitca-io = "0.3"
-xitca-server = "0.3"
-xitca-service = "0.1"
-xitca-unsafe-collection = "0.1.1"
+xitca-http = "0.6"
+xitca-io = "0.4"
+xitca-server = "0.4"
+xitca-service = "0.2"
+xitca-unsafe-collection = "0.2"
 
 atoi = "2"
 serde = { version = "1" }
 serde_json = { version = "1" }
 
 # web optional
-xitca-web = { version = "0.5", features = ["json"], optional = true }
+xitca-web = { version = "0.6", features = ["json"], optional = true }
 
 # raw-pg optional
 xitca-postgres = { version = "0.1", optional = true }
@@ -73,7 +71,7 @@ xitca-postgres = { version = "0.1", optional = true }
 diesel = { version = "2", features = ["postgres", "r2d2"], optional = true }
 
 # template optional
-sailfish = { version = "0.8", default-features = false, features = ["derive", "perf-inline"], optional = true }
+sailfish = { version = "0.9", default-features = false, features = ["derive", "perf-inline"], optional = true }
 
 # axum optional
 axum = { version = "0.7", optional = true, default-features = false, features = ["json", "query"] }
@@ -97,4 +95,5 @@ codegen-units = 1
 panic = "abort"
 
 [patch.crates-io]
-xitca-postgres = { git = "https://github.com/HFQR/xitca-web.git", rev = "ea1f5a2447e0969a6dff84eac9ff9ff90dbc7ed1" }
+xitca-postgres = { git = "https://github.com/HFQR/xitca-web.git", rev = "9835c0b" }
+mio = { git = "https://github.com/fakeshadow/mio", rev = "9bae6012b7ecfc6083350785f71a5e8265358178" }
