@@ -45,6 +45,8 @@ public static class NativeMethods
     [UnmanagedCallersOnly(EntryPoint = "Db")]
     public static unsafe IntPtr Db(int* length, IntPtr* handlePointer)
     {
+        //DbProviderFactory.SetConnectionString();
+        /*
         var world = RawDb.LoadSingleQueryRow().GetAwaiter().GetResult();
 
         var memoryStream = new MemoryStream();
@@ -54,6 +56,10 @@ public static class NativeMethods
 
         *length = (int)utf8JsonWriter.BytesCommitted; 
         byte[] byteArray = memoryStream.ToArray();
+        */
+
+        var byteArray = RawDb.LoadSingleQueryBytes().GetAwaiter().GetResult();
+        *length = byteArray.Length; 
 
         GCHandle handle = GCHandle.Alloc(byteArray, GCHandleType.Pinned);
         // return the managed and byteArrayPointer pointer

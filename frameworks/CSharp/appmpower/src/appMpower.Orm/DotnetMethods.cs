@@ -21,6 +21,12 @@ public static class DotnetMethods
 
     public static byte[] Db()
     {
+        DbProviderFactory.SetConnectionString();
+        var byteArray = RawDb.LoadSingleQueryBytes().GetAwaiter().GetResult();
+
+        return byteArray;
+
+        /*
         var world = RawDb.LoadSingleQueryRow().GetAwaiter().GetResult();
 
         var memoryStream = new MemoryStream();
@@ -29,6 +35,7 @@ public static class DotnetMethods
         _worldSerializer.Serialize(utf8JsonWriter, world);
 
         return memoryStream.ToArray();
+        */
     }
 
     public static byte[] Query(int queries)

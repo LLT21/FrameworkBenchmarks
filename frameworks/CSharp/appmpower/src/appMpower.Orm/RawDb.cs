@@ -28,6 +28,30 @@ namespace appMpower.Orm
          }
       }
 
+      public static async Task<byte[]> LoadSingleQueryBytes()
+      {
+         using var pooledConnection = new DbConnection(DbProviderFactory.ConnectionString);
+         await pooledConnection.OpenAsync();
+
+         var (dbCommand, _) = CreateReadCommand(pooledConnection);
+
+         using (dbCommand)
+         {
+            var dataReader = await dbCommand.ExecuteReaderAsync(CommandBehavior.SingleRow & CommandBehavior.SequentialAccess);
+
+            dataReader.Read();
+
+            byte[] buffer = new byte[4];
+
+            BitConverter.TryWriteBytes(buffer.AsSpan(0, 2), dataReader.GetInt16(0));
+            BitConverter.TryWriteBytes(buffer.AsSpan(2, 2), dataReader.GetInt16(1));
+
+            dataReader.Close();
+
+            return buffer;
+         }
+      }
+
       public static async Task<World> LoadSingleQueryRowById(int id)
       {
          using var pooledConnection = new DbConnection(DbProviderFactory.ConnectionString);
