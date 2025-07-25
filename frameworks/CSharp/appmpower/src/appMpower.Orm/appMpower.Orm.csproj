@@ -14,6 +14,7 @@
     <!--<RuntimeIdentifier>linux-arm64</RuntimeIdentifier>--> <!-- docker local -->
     <!--<RuntimeIdentifier>osx-arm64</RuntimeIdentifier>--> <!-- outside docker local -->
 
+    <!--
     <InvariantGlobalization>true</InvariantGlobalization>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
@@ -32,17 +33,19 @@
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <EventSourceSupport>false</EventSourceSupport>
     <DebuggerSupport>false</DebuggerSupport>
+    -->
 
     <!--<IlcDisableReflection>true</IlcDisableReflection>-->
   </PropertyGroup>
 
   <ItemGroup>
-    <RuntimeHostConfigurationOption Include="System.Threading.ThreadPool.HillClimbing.Disable" Value="true" />
+    <!--<RuntimeHostConfigurationOption Include="System.Threading.ThreadPool.HillClimbing.Disable" Value="true" />-->
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.Odbc" Version="9.0.6" />
     <PackageReference Include="MySqlConnector" Version="2.4.0" />
+    <PackageReference Include="Npgsql" Version="9.0.3" />
   </ItemGroup>
 
 </Project>
