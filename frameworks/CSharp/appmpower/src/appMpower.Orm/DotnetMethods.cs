@@ -21,7 +21,7 @@ public static class DotnetMethods
 
     public static byte[] Db()
     {
-        var world = RawDbMySql.LoadSingleQueryRow().GetAwaiter().GetResult();
+        var world = RawDbMySql.LoadSingleQueryRow();
 
         var memoryStream = new MemoryStream();
         using var utf8JsonWriter = new Utf8JsonWriter(memoryStream, _jsonWriterOptions);

@@ -15,14 +15,14 @@ namespace appMpower.Orm
         //private static string _connectionString = "Server=tfb-database;Database=hello_world;User ID=benchmarkdbuser;Password=benchmarkdbpass;Pooling=true;";
         private static string _connectionString = "Server=tfb-database;Database=hello_world;User Id=benchmarkdbuser;Password=benchmarkdbpass;Maximum Pool Size=1024;SslMode=None;ConnectionReset=false;ConnectionIdlePingTime=900;ConnectionIdleTimeout=0;AutoEnlist=false;DefaultCommandTimeout=0;ConnectionTimeout=0;IgnorePrepare=false;";
 
-        public static async Task<World> LoadSingleQueryRow()
+        public static World LoadSingleQueryRow()
         {
             using MySqlConnection mySqlConnection = new(_connectionString);
-            await mySqlConnection.OpenAsync();
+            mySqlConnection.Open();
 
             using MySqlCommand mySqlCommand = CreateReadCommand(mySqlConnection);
             
-            return await ReadSingleRow(mySqlCommand);
+            return ReadSingleRow(mySqlCommand);
         }
 
         internal static MySqlCommand CreateReadCommand(MySqlConnection mySqlConnection)
@@ -38,9 +38,9 @@ namespace appMpower.Orm
             return mySqlCommand;
         }
 
-        internal static async Task<World> ReadSingleRow(MySqlCommand mySqlCommand)
+        internal static World ReadSingleRow(MySqlCommand mySqlCommand)
         {
-            using MySqlDataReader dataReader = await mySqlCommand.ExecuteReaderAsync();
+            using MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
 
             dataReader.Read();
 
