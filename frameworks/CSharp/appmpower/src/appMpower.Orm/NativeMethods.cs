@@ -45,7 +45,7 @@ public static class NativeMethods
     [UnmanagedCallersOnly(EntryPoint = "Db")]
     public static unsafe IntPtr Db(int* length, IntPtr* handlePointer)
     {
-        var world = RawDb.LoadSingleQueryRow().GetAwaiter().GetResult();
+        var world = RawDbMySql.LoadSingleQueryRow().GetAwaiter().GetResult();
 
         var memoryStream = new MemoryStream();
         using var utf8JsonWriter = new Utf8JsonWriter(memoryStream, _jsonWriterOptions);
