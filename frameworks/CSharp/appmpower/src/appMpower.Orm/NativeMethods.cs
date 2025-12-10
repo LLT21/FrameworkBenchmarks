@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using appMpower.Orm.Data;
@@ -64,6 +65,37 @@ public static class NativeMethods
         *handlePointer = GCHandle.ToIntPtr(handle);
 
         return handle.AddrOfPinnedObject();
+    }
+
+    [UnmanagedCallersOnly(EntryPoint = "DbFill")]
+    public static unsafe int DbFill(byte* buffer, int bufferSize)
+    {
+        // 1. Fetch your data
+        var world = RawDb.LoadSingleQueryRow().GetAwaiter().GetResult();
+
+        // 2. Interpret IntPtr as byte*
+        //byte* ptr = (byte*)buffer;
+
+        // 3. Wrap caller's buffer in an UnmanagedMemoryStream
+        //using var stream = new UnmanagedMemoryStream(ptr, bufferSize, bufferSize, FileAccess.Write);
+        using var stream = new UnmanagedMemoryStream(buffer, bufferSize, bufferSize, FileAccess.Write);
+        using var writer = new Utf8JsonWriter(stream, _jsonWriterOptions);
+
+        // 4. Serialize directly into that buffer
+        _worldSerializer.Serialize(writer, world);
+        writer.Flush();
+
+        // 5. How many bytes were written
+        int written = (int)stream.Position;
+
+        // Optional: defensive check (you can delete this once confident)
+        if (written > bufferSize)
+        {
+            Console.WriteLine("number of bytes: " + written);
+            throw new InvalidOperationException("Overflowed buffer");
+        }
+
+        return written;
     }
 
     /*

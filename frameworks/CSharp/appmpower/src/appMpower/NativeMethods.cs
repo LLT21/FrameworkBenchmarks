@@ -26,6 +26,11 @@ public static partial class NativeMethods
     [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
     public static partial IntPtr Db(out int length, out IntPtr handlePointer);
 
+    [LibraryImport(LibName, EntryPoint = "DbFill")]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    public static unsafe 
+    partial int DbFill(byte* buffer, int bufferSize);
+
     [LibraryImport(LibName, EntryPoint = "Fortunes", StringMarshalling = StringMarshalling.Utf16)]
     [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
 
